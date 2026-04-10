@@ -70,3 +70,24 @@ export const inventory = pgTable("inventory", {
   addedAt: timestamp("added_at").defaultNow(),
   sourceOutfitId: uuid("source_outfit_id").references(() => outfits.id)
 })
+
+//Overall canva outfit  *doubt
+export const canvasOutfits = pgTable("canvas_outfits", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  userId: uuid("user_id").references(() => users.id).notNull(),
+  name: text("name").notNull(),
+  previewImage: text("preview_image"),
+  createdAt: timestamp("created_at").defaultNow()
+})
+
+//Store each individual pieces on canva *doubt 
+
+export const canvasLayers = pgTable("canvas_layers", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  canvasOutfitId: uuid("canvas_outfit_id").references(() => canvasOutfits.id).notNull(),
+  productId: uuid("product_id").references(() => products.id).notNull(),
+  positionX: numeric("position_x").notNull(),
+  positionY: numeric("position_y").notNull(),
+  zIndex: integer("z_index").notNull(),
+  scale: numeric("scale").default("1")
+})
