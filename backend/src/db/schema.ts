@@ -61,3 +61,12 @@ export const outfitPieces = pgTable("outfit_pieces", {
   productId: uuid("product_id").references(() => products.id),
   label: text("label") // "Top", "Boots" etc.
 })
+
+//Inventory
+export const inventory = pgTable("inventory", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  userId: uuid("user_id").references(() => users.id).notNull(),
+  productId: uuid("product_id").references(() => products.id).notNull(),
+  addedAt: timestamp("added_at").defaultNow(),
+  sourceOutfitId: uuid("source_outfit_id").references(() => outfits.id)
+})
