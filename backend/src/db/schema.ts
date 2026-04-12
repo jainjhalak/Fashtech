@@ -132,3 +132,29 @@ export const orderItems = pgTable("order_items", {
   quantity: integer("quantity").notNull(),
   priceAtPurchase: numeric("price_at_purchase").notNull()
 })
+
+//InspirePosts
+export const posts = pgTable("posts", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  userId: uuid("user_id").references(() => users.id).notNull(),
+  canvasOutfitId: uuid("canvas_outfit_id").references(() => canvasOutfits.id).notNull(),
+  boardId: uuid("board_id").references(() => boards.id).notNull(),
+  caption: text("caption"),
+  createdAt: timestamp("created_at").defaultNow()
+})
+
+//InspireLikes
+export const likes = pgTable("likes", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  postId: uuid("post_id").references(() => posts.id).notNull(),
+  userId: uuid("user_id").references(() => users.id).notNull(),
+})
+
+//InspireComments
+export const comments = pgTable("comments", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  postId: uuid("post_id").references(() => posts.id).notNull(),
+  userId: uuid("user_id").references(() => users.id).notNull(),
+  text: text("text").notNull(),
+  createdAt: timestamp("created_at").defaultNow()
+})

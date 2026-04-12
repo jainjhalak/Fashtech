@@ -8,6 +8,7 @@ import inventoryRoutes from "./routes/inventory.routes"
 import canvasRoutes from "./routes/canvas.route"
 import boardsRoute from "./routes/boards.routes"
 import ordersRoutes from "./routes/orders.routes"
+import postsRoutes from "./routes/posts.routes"
 
 dotenv.config();
 
@@ -24,6 +25,7 @@ app.use("/api/inventory", inventoryRoutes)
 app.use("/api/canvas", canvasRoutes)
 app.use("/api/boards", boardsRoute)
 app.use("/api/orders", ordersRoutes)
+app.use("/api/posts", postsRoutes)
 
 app.listen(PORT, () => {
     console.log(`server running port ${PORT}`)
