@@ -109,3 +109,26 @@ export const boardOutfits = pgTable("board_outfits", {
   canvasOutfitId: uuid("canvas_outfit_id").references(() => canvasOutfits.id).notNull(),
   addedAt: timestamp("added_at").defaultNow()
 })
+
+//Orders
+export const orders = pgTable("orders", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  userId: uuid("user_id").references(() => users.id).notNull(),
+  totalAmount: numeric("total_amount").notNull(),
+  status: orderStatusEnum("status").default("pending").notNull(),
+  shippingAddressLine1: text("shipping_address_line1").notNull(),
+  shippingCity: text("shipping_city").notNull(),
+  shippingState: text("shipping_state").notNull(),
+  shippingCountry: text("shipping_country").notNull(),
+  shippingZip: text("shipping_zip").notNull(),
+  createdAt: timestamp("created_at").defaultNow()
+})
+
+//OrderItems
+export const orderItems = pgTable("order_items", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  orderId: uuid("order_id").references(() => orders.id).notNull(),
+  productId: uuid("product_id").references(() => products.id).notNull(),
+  quantity: integer("quantity").notNull(),
+  priceAtPurchase: numeric("price_at_purchase").notNull()
+})
