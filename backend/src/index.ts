@@ -9,6 +9,7 @@ import canvasRoutes from "./routes/canvas.route"
 import boardsRoute from "./routes/boards.routes"
 import ordersRoutes from "./routes/orders.routes"
 import postsRoutes from "./routes/posts.routes"
+import adminRoutes from "./routes/admin.routes"
 
 dotenv.config();
 
@@ -26,6 +27,7 @@ app.use("/api/canvas", canvasRoutes)
 app.use("/api/boards", boardsRoute)
 app.use("/api/orders", ordersRoutes)
 app.use("/api/posts", postsRoutes)
+app.use("/api/admin", adminRoutes)
 
 app.listen(PORT, () => {
     console.log(`server running port ${PORT}`)
