@@ -91,3 +91,21 @@ export const canvasLayers = pgTable("canvas_layers", {
   zIndex: integer("z_index").notNull(),
   scale: numeric("scale").default("1")
 })
+
+//Boards 
+export const boards = pgTable("boards", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  userId: uuid("user_id").references(() => users.id).notNull(),
+  name: text("name").notNull(),
+  description: text("description"),
+  coverImage: text("cover_image"),
+  createdAt: timestamp("created_at").defaultNow()
+})
+
+//BoardsOutfit
+export const boardOutfits = pgTable("board_outfits", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  boardId: uuid("board_id").references(() => boards.id).notNull(),
+  canvasOutfitId: uuid("canvas_outfit_id").references(() => canvasOutfits.id).notNull(),
+  addedAt: timestamp("added_at").defaultNow()
+})
