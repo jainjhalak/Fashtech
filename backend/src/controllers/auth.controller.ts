@@ -36,9 +36,14 @@ export const registerUser = async (req: Request, res: Response) => {
         res.status(201).json({ user: newUser[0], token })
 
     } catch (error) {
-        res.status(500).json({ messahe: "Server error" })
-    }
+  console.log("🔥 ERROR:", error)
+  return res.status(500).json({
+    message: "Server error",
+    error: error instanceof Error ? error.message : error,
+  })
 }
+    }
+
 
 export const loginUser = async (req: Request, res: Response) => {
     try {
@@ -46,7 +51,7 @@ export const loginUser = async (req: Request, res: Response) => {
 
         const user = await db.select().from(users).where(eq(users.email, email))
         if (user.length === 0) {
-            return res.status(400).json({ mesaage: "Invalid credentials" })
+            return res.status(400).json({ message: "Invalid credentials" })
         }
 
         const isMatch = await bcrypt.compare(password, user[0].password)
@@ -63,6 +68,10 @@ export const loginUser = async (req: Request, res: Response) => {
         res.status(200).json({ user: user[0], token })
 
     } catch (error) {
-        res.status(500).json({ message: "Server error", error })
-    }
+  console.log("🔥 ERROR:", error)
+  return res.status(500).json({
+    message: "Server error",
+    error: error instanceof Error ? error.message : error,
+  })
+}
 }
