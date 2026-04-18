@@ -8,11 +8,14 @@ export const queryStatusEnum = pgEnum("query_status", ["open", "in-progress", "r
 // Users
 export const users = pgTable("users", {
   id: uuid("id").defaultRandom().primaryKey(),
+
   username: text("username").notNull().unique(),
   email: text("email").notNull().unique(),
   password: text("password").notNull(),
+
   avatar: text("avatar"),
   bio: text("bio"),
+
   role: roleEnum("role").default("user").notNull(),
   createdAt: timestamp("created_at").defaultNow()
 })

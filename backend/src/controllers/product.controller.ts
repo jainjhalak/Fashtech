@@ -3,6 +3,7 @@ import { db } from "../db"
 import { products } from "../db/schema"
 import { eq } from "drizzle-orm"
 import { AuthRequest } from "../middlewares/auth.middleware"
+import { outfitPieces } from "../db/schema";
 
 /* ------------------------- CREATE PRODUCT ------------------------- */
 export const createProduct = async (req: AuthRequest, res: Response) => {
@@ -149,6 +150,18 @@ export const deleteProduct = async (req: AuthRequest, res: Response) => {
       return res.status(404).json({ message: "Product not found" })
     }
 
+    //product used in outfit cannot be deleted
+    const usage = await db
+      .select()
+      .from(outfitPieces)
+      .where(eq(outfitPieces.productId, id));
+
+    if (usage.length > 0) {
+      return res.status(400).json({
+        message: "Product is used in outfits. Cannot delete."
+      });
+    }
+
     // 🔐 ADMIN can delete anything
     if (req.user.role === "admin") {
       await db.delete(products).where(eq(products.id, id))
@@ -167,6 +180,7 @@ export const deleteProduct = async (req: AuthRequest, res: Response) => {
 
     return res.status(403).json({ message: "Not allowed" })
   } catch (error) {
+    console.log(error)
     return res.status(500).json({ message: "Error deleting product" })
   }
 }
