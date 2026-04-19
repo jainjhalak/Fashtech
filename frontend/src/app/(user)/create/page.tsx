@@ -5,6 +5,7 @@ import CollageCanvas from "../../components/CollageCanvas";
 import Navbar from "../../components/Navbar";
 import { useRouter } from "next/navigation";
 import { Item, PlacedItem } from "@/types";
+import api from "@/lib/axios";
 
 export default function TestCanvasPage() {
   const router = useRouter();
@@ -81,21 +82,48 @@ export default function TestCanvasPage() {
   const totalPrice = items.reduce((sum, i) => sum + (i.price || 0), 0);
 
   const handleArchive = () => setShowModal1(true);
-  const handleModal1Submit = () => {
-    if (visibility === "public") {
-      setShowModal1(false);
-      setShowModal2(true);
-    } else {
-      setShowModal1(false);
-      alert(`Saved ${outfitName} to board "${boardName}" as private`);
+
+  // ✅ Save logic wired to backend
+  const handleModal1Submit = async () => {
+    try {
+      const payload = {
+        name: outfitName,
+        description: "Created via TestCanvasPage",
+        styleCategory: "punk", // adjust as needed
+        coverImage: items[0]?.imageUrl || null,
+        pieces: items.map(i => ({
+          productId: i.id,
+          label: i.name
+        })),
+        visibility
+      };
+
+      const res = await api.post("/outfits", payload);
+
+      if (visibility === "public") {
+        setShowModal1(false);
+        setShowModal2(true);
+      } else {
+        setShowModal1(false);
+        console.log("Saved outfit:", res.data.outfit);
+        alert(`Saved ${outfitName} to board "${boardName}" as private`);
+      }
+    } catch (err) {
+      console.error("Error saving outfit", err);
+      alert("Failed to save outfit");
     }
   };
-  const handleModal2Submit = (postOnInspire: boolean) => {
+
+  const handleModal2Submit = async (postOnInspire: boolean) => {
     setShowModal2(false);
-    if (postOnInspire) {
-      router.push("/inspire");
-    } else {
-      alert(`Saved ${outfitName} to board "${boardName}" as public`);
+    try {
+      if (postOnInspire) {
+        router.push("/inspire");
+      } else {
+        alert(`Saved ${outfitName} to board "${boardName}" as public`);
+      }
+    } catch (err) {
+      console.error("Error updating outfit", err);
     }
   };
 
@@ -156,13 +184,6 @@ export default function TestCanvasPage() {
       <footer className="text-center py-2 text-[10px] text-zinc-500 border-t border-[#811b1b]">
         © 2025 FASHTECH — Digital Wardrobe Experiment
       </footer>
-
-      {/* Modal 1 */}
-      {showModal1 && (
-        <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50">
-          {/* … modal content same as your example … */}
-        </div>
-      )}
 
       {/* Modal 1 */}
       {showModal1 && (
