@@ -46,9 +46,9 @@ const CommentIcon = () => (
 
 export default function InspirePage() {
   const [posts] = useState<Post[]>([
-    { id: "1", userId: "Alice", caption: "My punk boots outfit 🔥", imageUrl: "/boots.png" },
-    { id: "2", userId: "Bob", caption: "Coquette vibes today 💖", imageUrl: "/jacket.png" },
-    { id: "3", userId: "Charlie", caption: "Sci-fi inspired jacket ⚡", imageUrl: "/sci-fi.png" },
+    { id: "1", userId: "Alice", caption: "Rate my office siren look. 🔥", imageUrl: "https://res.cloudinary.com/dnpwoxc4e/image/upload/v1776613270/download_2_epgilb.jpg" },
+    { id: "2", userId: "Bob", caption: "Viloet Evergarden? The gloves def are giving that vibe. 💖", imageUrl: "https://res.cloudinary.com/dnpwoxc4e/image/upload/v1776613079/download_1_sjjyyq.jpg" },
+    { id: "3", userId: "Charlie", caption: "Historical much?", imageUrl: "https://res.cloudinary.com/dnpwoxc4e/image/upload/v1776613148/%E0%BC%98___aab8c6.jpg" },
   ]);
 
   const [likedPosts, setLikedPosts] = useState<Record<string, boolean>>({});
