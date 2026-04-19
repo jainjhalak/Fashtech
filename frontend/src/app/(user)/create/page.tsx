@@ -10,8 +10,13 @@ export default function TestCanvasPage() {
   const router = useRouter();
 
   const dummyInventory: Item[] = [
-    { id: "1", name: "Boots", price: 100, category: "punk", type: "shoes", imageUrl: "/boots.png", stock: 10 },
-    { id: "2", name: "Jacket", price: 200, category: "goth", type: "top", imageUrl: "/jacket.png", stock: 5 },
+    { id: "1", name: "Boots", price: 100, category: "punk", type: "shoes", imageUrl: "https://res.cloudinary.com/dnpwoxc4e/image/upload/v1776604789/NEW_ROCK_METALLIC_M-106-S112-removebg-preview_yjaxmb.png", stock: 10 },
+    { id: "2", name: "Neckpiece", price: 200, category: "goth", type: "neckpiece", imageUrl: "https://res.cloudinary.com/dnpwoxc4e/image/upload/v1776604787/download__1_-removebg-preview_he9abj.png", stock: 5 },
+    { id: "3", name: "Bag", price: 200, category: "goth", type: "bag", imageUrl: "https://res.cloudinary.com/dnpwoxc4e/image/upload/v1776604786/_y2koutfit__y2k__y2kfashion__fyp__oufit__baddie__y2kstyle-removebg-preview_btrmxs.png", stock: 5 },
+    { id: "4", name: "Jean", price: 200, category: "punk", type: "jean", imageUrl: "https://res.cloudinary.com/dnpwoxc4e/image/upload/v1776604786/cool_jeans_with_thigh_cutout-removebg-preview_mo3nh7.png", stock: 5 },
+    { id: "5", name: "Jean", price: 200, category: "punk", type: "jean", imageUrl: "https://res.cloudinary.com/dnpwoxc4e/image/upload/v1776604785/download-removebg-preview_lujax4.png", stock: 5 },
+    { id: "6", name: "Perfume", price: 200, category: "goth", type: "perfume", imageUrl: "https://res.cloudinary.com/dnpwoxc4e/image/upload/v1776604787/download__2_-removebg-preview_dytrua.png", stock: 5 },
+
   ];
 
   const [items, setItems] = useState<PlacedItem[]>([]);

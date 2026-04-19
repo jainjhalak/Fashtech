@@ -14,6 +14,8 @@ export default function HomePage() {
 
   const { outfits, setOutfits } = useOutfitStore()
 
+  console.log(api.defaults.baseURL)
+
 useEffect(() => {
   const fetchOutfits = async () => {
     const res = await api.get("/outfits")
