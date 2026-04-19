@@ -5,10 +5,7 @@ import CollageCanvas from "../../components/CollageCanvas";
 import Navbar from "../../components/Navbar";
 import { useRouter } from "next/navigation";
 import { Item, PlacedItem } from "@/types";
-<<<<<<< HEAD
-=======
 import api from "@/lib/axios";
->>>>>>> 479c266f11dfb592c015e4603951b904e443ba04
 
 export default function TestCanvasPage() {
   const router = useRouter();
@@ -20,13 +17,11 @@ export default function TestCanvasPage() {
     { id: "4", name: "Jean", price: 200, category: "punk", type: "jean", imageUrl: "https://res.cloudinary.com/dnpwoxc4e/image/upload/v1776604786/cool_jeans_with_thigh_cutout-removebg-preview_mo3nh7.png", stock: 5 },
     { id: "5", name: "Jean", price: 200, category: "punk", type: "jean", imageUrl: "https://res.cloudinary.com/dnpwoxc4e/image/upload/v1776604785/download-removebg-preview_lujax4.png", stock: 5 },
     { id: "6", name: "Perfume", price: 200, category: "goth", type: "perfume", imageUrl: "https://res.cloudinary.com/dnpwoxc4e/image/upload/v1776604787/download__2_-removebg-preview_dytrua.png", stock: 5 },
-
   ];
 
   const [items, setItems] = useState<PlacedItem[]>([]);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [outfitName, setOutfitName] = useState("NEW_ASSEMBLY");
-
   const [showModal1, setShowModal1] = useState(false);
   const [showModal2, setShowModal2] = useState(false);
   const [boardName, setBoardName] = useState("");
@@ -83,33 +78,14 @@ export default function TestCanvasPage() {
   };
 
   const totalPrice = items.reduce((sum, i) => sum + (i.price || 0), 0);
-
   const handleArchive = () => setShowModal1(true);
-<<<<<<< HEAD
-  const handleModal1Submit = () => {
-    if (visibility === "public") {
-      setShowModal1(false);
-      setShowModal2(true);
-    } else {
-      setShowModal1(false);
-      alert(`Saved ${outfitName} to board "${boardName}" as private`);
-    }
-  };
-  const handleModal2Submit = (postOnInspire: boolean) => {
-    setShowModal2(false);
-    if (postOnInspire) {
-      router.push("/inspire");
-    } else {
-      alert(`Saved ${outfitName} to board "${boardName}" as public`);
-=======
 
-  // ✅ Save logic wired to backend
   const handleModal1Submit = async () => {
     try {
       const payload = {
         name: outfitName,
         description: "Created via TestCanvasPage",
-        styleCategory: "punk", // adjust as needed
+        styleCategory: "punk",
         coverImage: items[0]?.imageUrl || null,
         pieces: items.map(i => ({
           productId: i.id,
@@ -144,26 +120,19 @@ export default function TestCanvasPage() {
       }
     } catch (err) {
       console.error("Error updating outfit", err);
->>>>>>> 479c266f11dfb592c015e4603951b904e443ba04
     }
   };
 
   return (
     <div className="min-h-screen bg-[#0a0a0a] text-white font-mono">
       <Navbar />
-
       <div className="grid grid-cols-[220px_1fr_160px] gap-4 p-4 items-start flex-1">
-        {/* Library */}
         <aside className="flex flex-col gap-3">
           <div className="bg-black/40 border border-[#811b1b] rounded-xl p-3">
             <h2 className="text-xs font-bold text-center text-[#ce1c1c] mb-2">LIBRARY</h2>
             <div className="grid grid-cols-2 gap-2">
               {dummyInventory.map((item) => (
-                <div
-                  key={item.id}
-                  className="aspect-[3/4] bg-white rounded-lg p-1 cursor-pointer hover:scale-105 transition-transform"
-                  onClick={() => addItem(item)}
-                >
+                <div key={item.id} className="aspect-[3/4] bg-white rounded-lg p-1 cursor-pointer hover:scale-105 transition-transform" onClick={() => addItem(item)}>
                   <img src={item.imageUrl} alt={item.name} className="w-full h-full object-contain" />
                   <p className="text-[10px] text-center mt-1 text-black">${item.price}</p>
                 </div>
@@ -175,121 +144,44 @@ export default function TestCanvasPage() {
           </div>
         </aside>
 
-        {/* Canvas */}
         <div className="flex flex-col items-center gap-3">
-          <input
-            value={outfitName}
-            onChange={(e) => setOutfitName(e.target.value.toUpperCase())}
-            className="bg-transparent text-lg font-bold text-[#ce1c1c] outline-none text-center"
-          />
-          <CollageCanvas
-            items={items}
-            selectedId={selectedId}
-            setItems={setItems}
-            setSelectedId={setSelectedId}
-            handleDrag={handleDrag}
-          />
+          <input value={outfitName} onChange={(e) => setOutfitName(e.target.value.toUpperCase())} className="bg-transparent text-lg font-bold text-[#ce1c1c] outline-none text-center" />
+          <CollageCanvas items={items} selectedId={selectedId} setItems={setItems} setSelectedId={setSelectedId} handleDrag={handleDrag} />
         </div>
 
-        {/* Save button */}
         <div className="flex justify-end items-start">
-          <button
-            onClick={handleArchive}
-            className="bg-[#811b1b] hover:bg-[#ce1c1c] text-white px-4 py-2 rounded-full text-xs font-bold"
-          >
-            ARCHIVE
-          </button>
+          <button onClick={handleArchive} className="bg-[#811b1b] hover:bg-[#ce1c1c] text-white px-4 py-2 rounded-full text-xs font-bold">ARCHIVE</button>
         </div>
       </div>
 
-      <footer className="text-center py-2 text-[10px] text-zinc-500 border-t border-[#811b1b]">
-        © 2025 FASHTECH — Digital Wardrobe Experiment
-      </footer>
+      <footer className="text-center py-2 text-[10px] text-zinc-500 border-t border-[#811b1b]">© 2025 FASHTECH — Digital Wardrobe Experiment</footer>
 
-      {/* Modal 1 */}
       {showModal1 && (
         <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50">
-<<<<<<< HEAD
-          {/* … modal content same as your example … */}
-        </div>
-      )}
-
-      {/* Modal 1 */}
-      {showModal1 && (
-        <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50">
-=======
->>>>>>> 479c266f11dfb592c015e4603951b904e443ba04
           <div className="bg-zinc-900 p-6 rounded-lg w-80 space-y-3">
             <h2 className="text-[#ce1c1c] font-bold text-sm">Save Outfit</h2>
-            <input
-              value={outfitName}
-              onChange={(e) => setOutfitName(e.target.value)}
-              className="w-full p-2 rounded bg-zinc-800 text-white text-xs"
-              placeholder="Outfit Name"
-            />
-            <input
-              value={boardName}
-              onChange={(e) => setBoardName(e.target.value)}
-              className="w-full p-2 rounded bg-zinc-800 text-white text-xs"
-              placeholder="Board Collection (or create new)"
-            />
+            <input value={outfitName} onChange={(e) => setOutfitName(e.target.value)} className="w-full p-2 rounded bg-zinc-800 text-white text-xs" placeholder="Outfit Name" />
+            <input value={boardName} onChange={(e) => setBoardName(e.target.value)} className="w-full p-2 rounded bg-zinc-800 text-white text-xs" placeholder="Board Collection (or create new)" />
             <div className="flex gap-3 text-xs text-white">
-              <label className="flex items-center gap-1">
-                <input
-                  type="radio"
-                  checked={visibility === "private"}
-                  onChange={() => setVisibility("private")}
-                />
-                Private
-              </label>
-              <label className="flex items-center gap-1">
-                <input
-                  type="radio"
-                  checked={visibility === "public"}
-                  onChange={() => setVisibility("public")}
-                />
-                Public
-              </label>
+              <label className="flex items-center gap-1"><input type="radio" checked={visibility === "private"} onChange={() => setVisibility("private")} />Private</label>
+              <label className="flex items-center gap-1"><input type="radio" checked={visibility === "public"} onChange={() => setVisibility("public")} />Public</label>
             </div>
             <div className="flex justify-end gap-2">
-              <button
-                onClick={() => setShowModal1(false)}
-                className="px-3 py-1 text-xs bg-zinc-700 rounded"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={handleModal1Submit}
-                className="px-3 py-1 text-xs bg-[#ce1c1c] rounded"
-              >
-                Save
-              </button>
+              <button onClick={() => setShowModal1(false)} className="px-3 py-1 text-xs bg-zinc-700 rounded">Cancel</button>
+              <button onClick={handleModal1Submit} className="px-3 py-1 text-xs bg-[#ce1c1c] rounded">Save</button>
             </div>
           </div>
         </div>
       )}
 
-      {/* Modal 2 */}
       {showModal2 && (
         <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50">
           <div className="bg-zinc-900 p-6 rounded-lg w-80 space-y-3">
             <h2 className="text-[#ce1c1c] font-bold text-sm">Post to Inspire?</h2>
-            <p className="text-xs text-white">
-              You chose to make this outfit public. Would you like to also post it on Inspire?
-            </p>
+            <p className="text-xs text-white">You chose to make this outfit public. Would you like to also post it on Inspire?</p>
             <div className="flex justify-end gap-2">
-              <button
-                onClick={() => handleModal2Submit(false)}
-                className="px-3 py-1 text-xs bg-zinc-700 rounded"
-              >
-                No
-              </button>
-              <button
-                onClick={() => handleModal2Submit(true)}
-                className="px-3 py-1 text-xs bg-[#ce1c1c] rounded"
-              >
-                Yes
-              </button>
+              <button onClick={() => handleModal2Submit(false)} className="px-3 py-1 text-xs bg-zinc-700 rounded">No</button>
+              <button onClick={() => handleModal2Submit(true)} className="px-3 py-1 text-xs bg-[#ce1c1c] rounded">Yes</button>
             </div>
           </div>
         </div>
