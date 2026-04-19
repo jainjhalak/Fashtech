@@ -5,6 +5,10 @@ import CollageCanvas from "../../components/CollageCanvas";
 import Navbar from "../../components/Navbar";
 import { useRouter } from "next/navigation";
 import { Item, PlacedItem } from "@/types";
+<<<<<<< HEAD
+=======
+import api from "@/lib/axios";
+>>>>>>> 479c266f11dfb592c015e4603951b904e443ba04
 
 export default function TestCanvasPage() {
   const router = useRouter();
@@ -81,6 +85,7 @@ export default function TestCanvasPage() {
   const totalPrice = items.reduce((sum, i) => sum + (i.price || 0), 0);
 
   const handleArchive = () => setShowModal1(true);
+<<<<<<< HEAD
   const handleModal1Submit = () => {
     if (visibility === "public") {
       setShowModal1(false);
@@ -96,6 +101,50 @@ export default function TestCanvasPage() {
       router.push("/inspire");
     } else {
       alert(`Saved ${outfitName} to board "${boardName}" as public`);
+=======
+
+  // ✅ Save logic wired to backend
+  const handleModal1Submit = async () => {
+    try {
+      const payload = {
+        name: outfitName,
+        description: "Created via TestCanvasPage",
+        styleCategory: "punk", // adjust as needed
+        coverImage: items[0]?.imageUrl || null,
+        pieces: items.map(i => ({
+          productId: i.id,
+          label: i.name
+        })),
+        visibility
+      };
+
+      const res = await api.post("/outfits", payload);
+
+      if (visibility === "public") {
+        setShowModal1(false);
+        setShowModal2(true);
+      } else {
+        setShowModal1(false);
+        console.log("Saved outfit:", res.data.outfit);
+        alert(`Saved ${outfitName} to board "${boardName}" as private`);
+      }
+    } catch (err) {
+      console.error("Error saving outfit", err);
+      alert("Failed to save outfit");
+    }
+  };
+
+  const handleModal2Submit = async (postOnInspire: boolean) => {
+    setShowModal2(false);
+    try {
+      if (postOnInspire) {
+        router.push("/inspire");
+      } else {
+        alert(`Saved ${outfitName} to board "${boardName}" as public`);
+      }
+    } catch (err) {
+      console.error("Error updating outfit", err);
+>>>>>>> 479c266f11dfb592c015e4603951b904e443ba04
     }
   };
 
@@ -160,6 +209,7 @@ export default function TestCanvasPage() {
       {/* Modal 1 */}
       {showModal1 && (
         <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50">
+<<<<<<< HEAD
           {/* … modal content same as your example … */}
         </div>
       )}
@@ -167,6 +217,8 @@ export default function TestCanvasPage() {
       {/* Modal 1 */}
       {showModal1 && (
         <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50">
+=======
+>>>>>>> 479c266f11dfb592c015e4603951b904e443ba04
           <div className="bg-zinc-900 p-6 rounded-lg w-80 space-y-3">
             <h2 className="text-[#ce1c1c] font-bold text-sm">Save Outfit</h2>
             <input

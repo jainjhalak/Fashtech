@@ -92,10 +92,12 @@ useEffect(() => {
             display: "flex", alignItems: "center", justifyContent: "center",
             opacity: 0, transition: "opacity 0.3s"
         }}>
+         <a href={`/outfits/${outfit.id}`}>
          <button style={{
              backgroundColor: "#ce1c1c", color: "#fff", border: "none",
              padding: "10px 24px", fontSize: "0.65rem", letterSpacing: "0.2em", cursor: "pointer"
             }}>VIEW OUTFIT</button>
+          </a>
         </div>
         </div>
 
