@@ -6,7 +6,7 @@ import api from "@/lib/axios"
 import Navbar from "@/app/components/Navbar"
 
 
-const categories = ["ALL", "GOTH", "PUNK", "COTTAGECORE", "STREETWEAR", "DARK ACADEMIA", "Y2K", "GRUNGE"]
+const categories = ["ALL", "GOTH", "PUNK", "COTTAGECORE", "STREETWEAR", "DARK ACADEMIA", "Y2K", "GRUNGE", "GYARU", "WHIMSY"]
 
 
 export default function HomePage() {
