@@ -18,8 +18,13 @@ export default function HomePage() {
 
 useEffect(() => {
   const fetchOutfits = async () => {
-    const res = await api.get("/outfits")
-    setOutfits(res.data.outfits)
+    try {
+      const res = await api.get("/outfits")
+      console.log(res.data)
+      setOutfits(res.data.outfits)
+    } catch (err) {
+      console.log("fetch error", err)
+    }
   }
   fetchOutfits()
 }, [])
