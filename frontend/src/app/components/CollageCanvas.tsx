@@ -47,30 +47,48 @@ export default function CollageCanvas({
   };
 
   return (
-    <div className="relative w-full max-w-[320px] aspect-[3/4] bg-zinc-900 border border-[#811b1b] rounded-lg overflow-hidden">
+    <div
+      className="relative w-full max-w-[320px] aspect-[3/4] bg-white border border-[#811b1b] rounded-lg overflow-hidden select-none"
+      onClick={() => setSelectedId(null)} // click background to deselect
+    >
       {items.map(item => (
         <div
           key={item.instanceId}
+          className="select-none"
           style={{
             position: "absolute",
             left: `${item.x}%`,
             top: `${item.y}%`,
-            transform: `scale(${item.scale}) rotate(${item.rotation}deg)`,
             zIndex: item.zIndex,
-            border: selectedId === item.instanceId ? "1px solid #ce1c1c" : "none",
           }}
-          onMouseDown={(e) => handleDrag(e, item.instanceId)}
+          onMouseDown={(e) => handleDrag(e, item.instanceId)} // drag only moves
           onTouchStart={(e) => handleDrag(e, item.instanceId)}
-          onClick={() => setSelectedId(item.instanceId)}
+          onClick={(e) => {
+            e.stopPropagation(); // prevent background deselect
+            setSelectedId(item.instanceId); // only click sets selection
+          }}
         >
-          <img
-            src={item.imageUrl}
-            alt={item.name}
-            className="w-full h-full object-contain pointer-events-none"
-          />
+          {/* Inner wrapper for transforms */}
+          <div
+            style={{
+              transform: `scale(${item.scale}) rotate(${item.rotation}deg)`,
+              transformOrigin: "center center",
+            }}
+          >
+            <img
+              src={item.imageUrl}
+              alt={item.name}
+              className="w-20 h-20 object-contain pointer-events-none"
+              draggable={false} // prevent browser image drag
+            />
+          </div>
 
+          {/* Controls only appear when clicked/selected */}
           {selectedId === item.instanceId && (
-            <div className="flex gap-1 mt-1">
+            <div
+              className="absolute top-0 left-1/2 -translate-x-1/2 flex gap-1"
+              style={{ zIndex: item.zIndex + 1 }}
+            >
               <button
                 onClick={() => shrinkItem(item.instanceId)}
                 className="bg-zinc-700 text-white text-xs px-2 rounded"
